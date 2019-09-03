@@ -1,10 +1,17 @@
 import React from 'react';
-// import logo from './logo.svg';
-import './header.style.scss';
+import styled from 'styled-components';
+import stylevar from '../../constants/styleVariables';
 
+const HeaderText = styled.header`
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  color: ${stylevar.yellow};
+  font-size: 3rem;
+  text-align: center;
+`
 const Header: React.FC = () => {
   return (
-   <header>Don't F*** with Chuck </header>
+   <HeaderText>Don't F*** with Chuck </HeaderText>
   );
 }
 

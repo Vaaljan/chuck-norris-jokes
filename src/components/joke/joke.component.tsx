@@ -1,10 +1,10 @@
 import React from 'react';
-import './joke.style.scss';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { Loader } from '../loader/loader.component';
 import { Error } from '../error/error.component';
-
+import styled from 'styled-components';
+import stylevar from '../../constants/styleVariables';
 
 interface IJoke {
     category: string;
@@ -19,6 +19,33 @@ query ($category:String!) {
 }
 `;
 
+const JokeWindow  = styled.div` 
+    width: 90%;
+    position: relative;
+    text-align: center;
+    color:$white;
+    font-size: 1.5rem;
+    padding: 15%;
+    border:2px solid ${stylevar.yellow};
+`;
+const JokeClose = styled.div`
+    position: absolute;
+    right: 1.5rem;
+    top: 10px;
+    color: ${stylevar.yellow};
+    font-size: 3rem;
+    cursor: pointer;
+    -webkit-transition: -webkit-transform .3s ease-in-out;
+    transition: transform .3s ease-in-out;
+    &:hover{
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+`;
+
+const JokeText = styled.div`
+    color:${stylevar.white}
+`;
 
 const Joke: React.FC<IJoke> = ({
     category, closeEvent
@@ -32,12 +59,10 @@ const Joke: React.FC<IJoke> = ({
     if (error) return <Error message={error.message} />
 
     return (
-        <div className="joke-window">
-            <div className="joke-window-close" onClick={() => { closeEvent() }}>X</div>
-            <div className="joke-window-body">
-                <div className="joke-window-text"> {data.jokeByCategory.value}</div>
-            </div>
-        </div>
+        <JokeWindow>
+            <JokeClose onClick={() => { closeEvent() }}>X</JokeClose>
+                <JokeText> {data.jokeByCategory.value}</JokeText>
+        </JokeWindow>
     );
 }
 
